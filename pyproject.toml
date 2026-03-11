@@ -1,0 +1,65 @@
+[project]
+name = "awesome-playground"
+version = "0.1.0"
+description = "A playground for experimenting with Python code"
+readme = "README.md"
+authors = [
+    { name = "Artem Zinovev", email = "artem.zinoviev@yandex.ru" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.135.1",
+    "uvicorn[standard]>=0.41.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.10.9,<0.11.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "mypy>=1.19.1",
+    "pre-commit>=4.5.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.15.5",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "Q",    # flake8-quotes
+    "UP",   # pyupgrade — подсказывает современный синтаксис
+    "SIM",  # flake8-simplify — упрощает код
+    "PTH",  # flake8-use-pathlib — pathlib вместо os.path
+    "RUF",  # ruff-specific rules
+    "S",    # flake8-bandit — безопасность
+    "N",    # pep8-naming
+]
+ignore = ["E501"]  # длина строк — ruff format сам
+fixable = ["ALL"]  # автофикс везде
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
