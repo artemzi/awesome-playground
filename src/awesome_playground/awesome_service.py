@@ -1,10 +1,13 @@
 """Awesome FastAPI service module."""
 
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from importlib.metadata import version
 
 from fastapi import APIRouter, FastAPI, HTTPException
 from pydantic import BaseModel
 
+Lifespan = AsyncIterator[None]
 APP_VERSION = version("awesome-playground")
 router = APIRouter()
 
@@ -60,9 +63,19 @@ async def read_item(item_id: int) -> MessageResponse:
     return MessageResponse(message=f"Item {item_id}")
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> Lifespan:
+    print("starting service")
+
+    yield
+
+    print("stopping service")
+
+
 def create_app() -> FastAPI:
     application = FastAPI(
         title="Awesome Service",
+        lifespan=lifespan,
         description="A basic FastAPI service for awesome-playground",
         version=APP_VERSION,
     )
