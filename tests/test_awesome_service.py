@@ -40,3 +40,21 @@ def test_lifespan_logging(caplog: pytest.LogCaptureFixture) -> None:
     lifespan_messages = [r.message for r in caplog.records]
     assert any("starting service" in msg for msg in lifespan_messages)
     assert any("stopping service" in msg for msg in lifespan_messages)
+
+
+def test_item_negative() -> None:
+    response = client.get("/items/-1")
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
+def test_item_non_integer() -> None:
+    response = client.get("/items/abc")
+    assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
+
+
+def test_health_contains_version() -> None:
+    response = client.get("/health")
+    assert response.status_code == HTTPStatus.OK
+    data = response.json()
+    assert "version" in data
+    assert data["version"] != ""
