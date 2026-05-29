@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.14"
+          enable-cache: true
+
+      - run: uv sync --frozen
+
+      - name: Ruff check
+        run: uv run ruff check .
+
+      - name: Ruff format check
+        run: uv run ruff format . --check
+
+      - name: Mypy
+        run: uv run mypy .
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.14"
+          enable-cache: true
+
+      - run: uv sync --frozen
+
+      - name: Run tests with coverage
+        run: uv run pytest -v
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.14"
+          enable-cache: true
+
+      - run: uv sync --frozen
+
+      - name: Bandit
+        run: uv run bandit -r src/
+
+      - name: pip-audit
+        run: uv run pip-audit
