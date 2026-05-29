@@ -12,7 +12,7 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
     )
 
-    host: str = "0.0.0.0"  # noqa: S104
+    host: str = "0.0.0.0"  # noqa: S104  # nosec B104
     port: int = 8000
     log_level: str = "INFO"
     debug: bool = False

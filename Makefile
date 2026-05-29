@@ -33,6 +33,17 @@ test:
 	uv run pytest
 	@echo "✅ Tests complete!"
 
+## security: Run security checks (bandit + pip-audit)
+security:
+	@echo "🔒 Running security checks..."
+	uv run bandit -r src/ && \
+	uv run pip-audit
+	@echo "✅ Security checks complete!"
+
+## check: Run all checks (lint + test + security)
+check: lint test security
+	@echo "✅ All checks complete!"
+
 ## run: Run the FastAPI service
 run:
 	@echo "🚀 Starting Awesome Service..."
