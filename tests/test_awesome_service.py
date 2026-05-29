@@ -1,6 +1,9 @@
+import logging
+
+import pytest
 from fastapi.testclient import TestClient
 
-from awesome_playground.awesome_service import app
+from awesome_playground.awesome_service import app, create_app
 
 client = TestClient(app)
 
@@ -25,3 +28,14 @@ def test_item_valid() -> None:
 def test_item_invalid() -> None:
     response = client.get("/items/0")
     assert response.status_code == 400
+
+
+def test_lifespan_logging(caplog: pytest.LogCaptureFixture) -> None:
+    caplog.set_level(logging.INFO)
+    application = create_app()
+    with TestClient(application) as lifespan_client:
+        response = lifespan_client.get("/health")
+        assert response.status_code == 200
+    lifespan_messages = [r.message for r in caplog.records]
+    assert any("starting service" in msg for msg in lifespan_messages)
+    assert any("stopping service" in msg for msg in lifespan_messages)

@@ -35,6 +35,7 @@ repos:
           - fastapi
           - pydantic
           - pydantic-settings
+          - pytest
 
 # CI configuration
 ci:

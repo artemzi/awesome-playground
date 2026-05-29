@@ -1,11 +1,17 @@
 """Awesome FastAPI service module."""
 
+import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from importlib.metadata import version
 
 from fastapi import APIRouter, FastAPI, HTTPException
 from pydantic import BaseModel
+
+from awesome_playground.config import settings
+
+logging.basicConfig(level=getattr(logging, settings.log_level.upper()))
+logger = logging.getLogger(__name__)
 
 Lifespan = AsyncIterator[None]
 APP_VERSION = version("awesome-playground")
@@ -65,11 +71,11 @@ async def read_item(item_id: int) -> MessageResponse:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> Lifespan:
-    print("starting service")
+    logger.info("starting service", extra={"version": APP_VERSION})
 
     yield
 
-    print("stopping service")
+    logger.info("stopping service")
 
 
 def create_app() -> FastAPI:
