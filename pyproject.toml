@@ -34,6 +34,7 @@ dev = [
     "pytest>=9.0.2",
     "pytest-cov>=7.0.0",
     "ruff>=0.15.5",
+    "types-pyyaml>=6.0.12.20260518",
 ]
 
 [tool.ruff]
@@ -42,17 +43,24 @@ target-version = "py314"
 
 [tool.ruff.lint]
 select = [
-    "E",    # pycodestyle errors
-    "F",    # pyflakes
-    "I",    # isort
-    "B",    # flake8-bugbear
-    "Q",    # flake8-quotes
-    "UP",   # pyupgrade — подсказывает современный синтаксис
-    "SIM",  # flake8-simplify — упрощает код
-    "PTH",  # flake8-use-pathlib — pathlib вместо os.path
-    "RUF",  # ruff-specific rules
-    "S",    # flake8-bandit — безопасность
-    "N",    # pep8-naming
+    "E",     # pycodestyle errors
+    "F",     # pyflakes
+    "I",     # isort
+    "B",     # flake8-bugbear
+    "Q",     # flake8-quotes
+    "UP",    # pyupgrade
+    "SIM",   # flake8-simplify
+    "PTH",   # flake8-use-pathlib
+    "RUF",   # ruff-specific rules
+    "S",     # flake8-bandit — безопасность
+    "N",     # pep8-naming
+    "W",     # pycodestyle warnings
+    "C4",    # flake8-comprehensions
+    "TID",   # flake8-tidy-imports
+    "RSE",   # flake8-raise
+    "RET",   # flake8-return
+    "ARG",   # flake8-unused-arguments
+    "PL",    # Pylint
 ]
 ignore = ["E501"]  # длина строк — ruff format сам
 fixable = ["ALL"]  # автофикс везде
@@ -62,6 +70,7 @@ fixable = ["ALL"]  # автофикс везде
 
 [tool.ruff.format]
 quote-style = "double"
+docstring-code-format = true
 
 [tool.mypy]
 python_version = "3.14"

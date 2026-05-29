@@ -70,7 +70,7 @@ async def read_item(item_id: int) -> MessageResponse:
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> Lifespan:
+async def lifespan(app: FastAPI) -> Lifespan:  # noqa: ARG001
     logger.info("starting service", extra={"version": APP_VERSION})
 
     yield
