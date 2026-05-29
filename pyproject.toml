@@ -13,6 +13,15 @@ dependencies = [
     "uvicorn[standard]>=0.41.0",
 ]
 
+[project.scripts]
+awesome-service = "awesome_playground.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/alfa-dol/awesome-playground"
+Documentation = "https://github.com/alfa-dol/awesome-playground#readme"
+Repository = "https://github.com/alfa-dol/awesome-playground.git"
+Issues = "https://github.com/alfa-dol/awesome-playground/issues"
+
 [build-system]
 requires = ["uv_build>=0.10.9,<0.11.0"]
 build-backend = "uv_build"

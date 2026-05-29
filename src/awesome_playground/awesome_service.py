@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 Lifespan = AsyncIterator[None]
 APP_VERSION = version("awesome-playground")
-router = APIRouter()
+router = APIRouter(tags=["General"])
 
 
 class HealthResponse(BaseModel):
